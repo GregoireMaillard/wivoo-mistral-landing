@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événement Wivoo × Mistral</title>
+    <style>
+        :root {
+            /* Couleurs de marque - à personnaliser */
+            --wivoo-blue: #2563eb;
+            --mistral-purple: #9333ea;
+            --primary: #2563eb;
+            --secondary: #9333ea;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--white);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-container img {
+            height: 35px;
+            max-width: 150px;
+        }
+        
+        .logo-separator {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        nav a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .hero .date-location {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-color: var(--white);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+        
+        /* General Sections */
+        .section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .section p {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Cards Layout */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        /* About Companies */
+        .companies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .company-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .company-card img {
+            max-width: 200px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .company-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 5%;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Formulaire d'inscription */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .inscription-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group.full-width {
+            flex: 100%;
+            min-width: 100%;
+        }
+        
+        .inscription-form input,
+        .inscription-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .inscription-form input:focus,
+        .inscription-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+        
+        .inscription-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-submit {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .success-message {
+            background: rgba(46, 168, 112, 0.1);
+            border: 1px solid #2ea870;
+            color: #2ea870;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem auto;
+            max-width: 500px;
+        }
+        
+        .error-message {
+            background: rgba(235, 87, 87, 0.1);
+            border: 1px solid #eb5757;
+            color: #eb5757;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem auto;
+            max-width: 500px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            nav {
+                display: flex;
+                gap: 1rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .hero {
+                padding: 3rem 5%;
+            }
+            
+            .section {
+                padding: 3rem 5%;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            min-width: 100px;
+        }
+        
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <!-- Remplacer les src par les URLs réels des logos -->
+            <img src="wivoo-logo.svg" alt="Logo Wivoo" style="height: 35px;">
+            <span class="logo-separator">×</span>
+            <img src="mistral-logo.svg" alt="Logo Mistral AI" style="height: 35px;">
+        </div>
+        <nav>
+            <a href="#apropos">À propos</a>
+            <a href="#programme">Programme</a>
+            <a href="#orateurs">Orateurs</a>
+            <a href="#inscription">Inscription</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Wivoo × Mistral : L'IA au service de l'innovation</h1>
+        <p class="subtitle">Découvrez comment l'intelligence artificielle transforme les entreprises</p>
+        <p class="date-location">📅 15 octobre 2026 | 📍 Paris, Station F</p>
+        
+        <!-- Countdown Timer (optionnel) -->
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Jours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Heures</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Secondes</span>
+            </div>
+        </div>
+        
+        <a href="#inscription" class="btn">S'inscrire maintenant</a>
+    </section>
+
+    <!-- À propos -->
+    <section id="apropos" class="section">
+        <h2>À propos de l'événement</h2>
+        <p>
+            Wivoo et Mistral unissent leurs expertises pour vous proposer une journée exceptionnelle dédiée à 
+            l'intelligence artificielle. Cet événement est conçu pour les décideurs, les développeurs et les passionnés 
+            de technologie qui souhaitent comprendre comment l'IA peut transformer leur activité.
+        </p>
+        <p>
+            Au programme : conférences inspirantes, ateliers pratiques, démonstrations live et des opportunités 
+            de networking avec les meilleurs experts du secteur.
+        </p>
+        
+        <div class="features">
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">🎯</div>
+                <h3>Conférences</h3>
+                <p>Des interventions de haut niveau par des experts reconnus dans le domaine de l'IA.</p>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">🛠️</div>
+                <h3>Ateliers</h3>
+                <p>Des sessions pratiques pour mettre en application les dernières innovations.</p>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">🤝</div>
+                <h3>Networking</h3>
+                <p>Échangez avec des professionnels et des passionnés lors de moments dédiés.</p>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">💡</div>
+                <h3>Innovation</h3>
+                <p>Découvrez les dernières avancées technologiques en avant-première.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme -->
+    <section id="programme" class="section">
+        <h2>Programme de la journée</h2>
+        <p>Un agenda riche pour une immersion complète dans l'univers de l'IA</p>
+        
+        <div class="cards">
+            <div class="card animate-on-scroll">
+                <div class="card-icon">🍳</div>
+                <h3>09h00 - Accueil</h3>
+                <p>Petit-déjeuner et networking pour bien commencer la journée.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">🎤</div>
+                <h3>10h00 - Keynote d'ouverture</h3>
+                <p>Présentation des dernières avancées en IA par Wivoo et Mistral AI.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">🏢</div>
+                <h3>11h30 - Cas d'usage</h3>
+                <p>Retours d'expérience concrets de l'implémentation de l'IA en entreprise.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">🍽️</div>
+                <h3>12h30 - Déjeuner</h3>
+                <p>Pause déjeuner et networking.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">👨‍🏫</div>
+                <h3>14h00 - Ateliers pratiques</h3>
+                <p>Sessions interactives pour découvrir les outils concrets.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">🌐</div>
+                <h3>16h00 - Table ronde</h3>
+                <p>Débat sur l'avenir de l'IA avec des experts du secteur.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Orateurs -->
+    <section id="orateurs" class="section">
+        <h2>Nos orateurs</h2>
+        <p>Découvrez les experts qui interviendront lors de cet événement</p>
+        
+        <div class="cards">
+            <div class="card animate-on-scroll">
+                <div class="card-icon">👨‍💼</div>
+                <h3>Jean Dupont</h3>
+                <p><strong>CEO, Wivoo</strong></p>
+                <p>Expert en transformation digitale et innovation.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">👩‍💻</div>
+                <h3>Marie Martin</h3>
+                <p><strong>CTO, Mistral AI</strong></p>
+                <p>Spécialiste des modèles de langage et de l'IA générative.</p>
+            </div>
+            <div class="card animate-on-scroll">
+                <div class="card-icon">👨‍🔬</div>
+                <h3>Pierre Lambert</h3>
+                <p><strong>Directeur R&D, Wivoo</strong></p>
+                <p>Ingénieur en apprentissage automatique et vision par ordinateur.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pourquoi participer -->
+    <section class="section">
+        <h2>Pourquoi participer ?</h2>
+        <p>Rejoignez-nous pour bénéficier de ces avantages exclusifs</p>
+        
+        <div class="features">
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">📈</div>
+                <h3>Accélérer votre transformation</h3>
+                <p>Apprenez comment intégrer l'IA dans votre stratégie d'entreprise.</p>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">🌟</div>
+                <h3>Rester à la pointe</h3>
+                <p>Découvrez les dernières tendances avant tout le monde.</p>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">🎓</div>
+                <h3>Apprendre des meilleurs</h3>
+                <p>Formez-vous auprès d'experts reconnus dans le domaine.</p>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-icon">🤲</div>
+                <h3>Étendre votre réseau</h3>
+                <p>Rencontrez des professionnels partageant les mêmes centres d'intérêt.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- À propos des entreprises -->
+    <section class="section">
+        <h2>À propos de Wivoo et Mistral</h2>
+        
+        <div class="companies">
+            <div class="company-card animate-on-scroll">
+                <img src="wivoo-logo.svg" alt="Logo Wivoo" style="max-width: 200px; height: auto;">
+                <h3>Wivoo</h3>
+                <p>
+                    Wivoo est un acteur clé de la transformation numérique en France. 
+                    Spécialisée dans l'accompagnement des entreprises vers l'excellence 
+                    opérationnelle grâce à l'innovation technologique.
+                </p>
+            </div>
+            <div class="company-card animate-on-scroll">
+                <img src="mistral-logo.svg" alt="Logo Mistral AI" style="max-width: 200px; height: auto;">
+                <h3>Mistral AI</h3>
+                <p>
+                    Mistral AI est un laboratoire d'IA de pointe basé en France, 
+                    développant des modèles de langage avancés pour repenser la manière 
+                    dont nous interagissons avec l'intelligence artificielle.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inscription -->
+    <section id="inscription" class="section">
+        <h2 style="text-align: center;">Réservez votre place</h2>
+        <p style="text-align: center;">Places limitées. Inscrivez-vous dès maintenant pour ne pas manquer cet événement exceptionnel.</p>
+        <p style="text-align: center; font-size: 0.9rem; color: #666; margin-bottom: 2rem;">
+            Cet événement est gratuit, mais l'inscription est obligatoire.<br>
+            <em>Vos informations seront envoyées directement à gregoire.maillard@wivoo.fr.</em>
+        </p>
+        
+        <div class="form-container">
+            <form action="https://formsubmit.co/gregoire.maillard@wivoo.fr" method="POST" class="inscription-form" id="registrationForm">
+                <!-- Honeypot pour éviter les spams -->
+                <input type="text" name="_honey" style="display:none;">
+                
+                <!-- Champ caché pour l'objet de l'email -->
+                <input type="hidden" name="_subject" value="Nouvelle inscription - Événement Wivoo x Mistral">
+                
+
+                
+                <!-- Message de confirmation -->
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="Prénom" placeholder="Prénom *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Nom" placeholder="Nom *" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <input type="email" name="Email" placeholder="Email professionnel *" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="Entreprise" placeholder="Entreprise">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Poste" placeholder="Poste">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <textarea name="Message" placeholder="Message ou question spécifique" rows="4"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-primary">
+                        <span id="btnText">S'inscrire maintenant</span>
+                        <span id="btnLoading" style="display:none;">Envoi en cours...</span>
+                    </button>
+                </div>
+            </form>
+            
+            <div id="success-message" class="success-message" style="display:none;">
+                ✅ <strong>Merci pour votre inscription !</strong><br>
+                Votre demande a été envoyée à gregoire.maillard@wivoo.fr.<br>
+                Nous vous confirmerons votre participation par email sous 48h.
+            </div>
+            
+            <div id="error-message" class="error-message" style="display:none;">
+                ❌ Une erreur est survenue. Veuillez réessayer ou nous contacter directement à gregoire.maillard@wivoo.fr.
+            </div>
+        </div>
+        
+        <p style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: #666;">
+            Vous avez des questions ? Contactez-nous à <a href="mailto:gregoire.maillard@wivoo.fr" style="color: var(--primary);">gregoire.maillard@wivoo.fr</a>
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo-container" style="justify-content: center; margin-bottom: 1rem;">
+                <img src="wivoo-logo.svg" alt="Logo Wivoo" style="height: 25px;">
+                <span class="logo-separator">×</span>
+                <img src="mistral-logo.svg" alt="Logo Mistral AI" style="height: 25px;">
+            </div>
+            
+            <div class="footer-links">
+                <a href="#apropos">À propos</a>
+                <a href="#programme">Programme</a>
+                <a href="#orateurs">Orateurs</a>
+                <a href="#inscription">Inscription</a>
+                <a href="#">Mentions légales</a>
+                <a href="#">Politique de confidentialité</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" aria-label="Twitter">🐦</a>
+                <a href="#" aria-label="LinkedIn">💼</a>
+                <a href="#" aria-label="Email">✉️</a>
+            </div>
+            
+            <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">
+                © 2026 Wivoo & Mistral AI. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript pour le countdown timer -->
+    <script>
+        // Date de l'événement (à modifier selon votre date réelle)
+        const eventDate = new Date('2026-10-15T09:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = 
+                    '<p style="color: white; margin: 0;">L\'événement a commencé !</p>';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        // Mise à jour du compte à rebours toutes les secondes
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Gestion du formulaire d'inscription
+        const registrationForm = document.getElementById('registrationForm');
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const btnText = document.getElementById('btnText');
+                const btnLoading = document.getElementById('btnLoading');
+                const successMessage = document.getElementById('success-message');
+                const errorMessage = document.getElementById('error-message');
+                
+                // Réinitialiser les messages
+                errorMessage.style.display = 'none';
+                
+                // Validation des champs obligatoires
+                const requiredFields = registrationForm.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.style.borderColor = '#eb5757';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = '#ddd';
+                    }
+                });
+                
+                if (!isValid) {
+                    errorMessage.textContent = '❌ Veuillez remplir tous les champs obligatoires (*)';
+                    errorMessage.style.display = 'block';
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    return;
+                }
+                
+                // Vérification du format email
+                const emailField = registrationForm.querySelector('input[type="email"]');
+                if (emailField && !emailField.value.includes('@')) {
+                    emailField.style.borderColor = '#eb5757';
+                    errorMessage.textContent = '❌ Veuillez entrer un email valide';
+                    errorMessage.style.display = 'block';
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    return;
+                }
+                
+                // Afficher le chargement
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                
+                try {
+                    // Envoyer le formulaire via fetch
+                    const response = await fetch(registrationForm.action, {
+                        method: 'POST',
+                        body: new FormData(registrationForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        // Succès
+                        registrationForm.style.display = 'none';
+                        successMessage.style.display = 'block';
+                        
+                        // Réinitialiser le formulaire
+                        registrationForm.reset();
+                    } else {
+                        // Erreur
+                        throw new Error('Erreur lors de l\'envoi');
+                    }
+                } catch (error) {
+                    // Afficher l'erreur
+                    errorMessage.textContent = '❌ Une erreur est survenue. Veuillez réessayer ou nous contacter directement.';
+                    errorMessage.style.display = 'block';
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    
+                    // Masquer l'erreur après 5 secondes
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 5000);
+                }
+            });
+            
+            // Vérification au chargement (si redirection après soumission)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                const formContainer = document.querySelector('#inscription .form-container');
+                const successMessage = document.getElementById('success-message');
+                if (formContainer) formContainer.style.display = 'none';
+                if (successMessage) successMessage.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
